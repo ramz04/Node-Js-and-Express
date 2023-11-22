@@ -25,7 +25,7 @@ app.use(requestLogger)
 // })
 
 app.get("/", (request, response) => {
-  response.send("<div>Hello world</div>")
+  response.send("Hello world")
 })
 
 app.get("/api/notes", (request, response) => {
