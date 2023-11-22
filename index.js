@@ -25,8 +25,6 @@ app.use(requestLogger)
 // })
 
 app.get("/", (request, response) => {
-  response.setHeader("Content-Type", "text/html")
-  response.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate")
   response.send("<div>Hello world</div>")
 })
 
