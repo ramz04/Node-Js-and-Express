@@ -25,6 +25,8 @@ app.use(requestLogger)
 // })
 
 app.get("/", (request, response) => {
+  response.setHeader("Content-Type", "text/html")
+  response.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate")
   response.send("<div>Hello world</div>")
 })
 
@@ -75,3 +77,5 @@ const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
+module.exports = app
