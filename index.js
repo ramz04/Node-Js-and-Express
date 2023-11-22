@@ -1,10 +1,26 @@
 const express = require("express")
 const app = express()
 const cors = require("cors")
+const mongoose = require("mongoose")
 
 app.use(express.json())
 app.use(cors())
 require("dotenv").config()
+
+const username = encodeURIComponent("Abdul-Rahman")
+const password = encodeURIComponent(process.env.PASSWORD)
+
+const url = `mongodb+srv://${username}:${password}@atlascluster.1rl6kjx.mongodb.net/?retryWrites=true&w=majority`
+
+mongoose.set("strictQuery", false)
+mongoose.connect(url)
+
+const noteSchema = new mongoose.Schema({
+  content: String,
+  important: Boolean,
+})
+
+const Note = mongoose.model("Note", noteSchema)
 
 const requestLogger = (request, response, next) => {
   console.log("Method:", request.method)
@@ -46,7 +62,9 @@ app.get("/", (request, response) => {
 })
 
 app.get("/api/notes", (request, response) => {
-  response.json(notes)
+  Note.find({}).then((notes) => {
+    response.json(notes)
+  })
 })
 
 app.get("/api/notes/:id", (request, response) => {
