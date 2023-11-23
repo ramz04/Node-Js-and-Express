@@ -2,26 +2,6 @@
 /* eslint-disable indent */
 /* eslint-disable quotes */
 const mongoose = require("mongoose")
-require("dotenv").config()
-
-mongoose.set("strictQuery", false)
-
-const username = encodeURIComponent(process.env.NAME)
-const password = encodeURIComponent(process.env.PASSWORD)
-
-const url = `mongodb+srv://${username}:${password}@atlascluster.1rl6kjx.mongodb.net/?retryWrites=true&w=majority`
-
-console.log("connecting to", url)
-
-mongoose
-  .connect(url)
-
-  .then(() => {
-    console.log("connected to MongoDB")
-  })
-  .catch((error) => {
-    console.log("error connecting to MongoDB:", error.message)
-  })
 
 const noteSchema = new mongoose.Schema({
   content: {
@@ -30,6 +10,10 @@ const noteSchema = new mongoose.Schema({
     required: true,
   },
   important: Boolean,
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 })
 
 noteSchema.set("toJSON", {
